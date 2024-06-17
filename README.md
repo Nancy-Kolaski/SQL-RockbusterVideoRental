@@ -25,6 +25,4 @@ The dataset includes information on Rockbuster’s data looaded into a PostgreSQ
 
  
 ## Visualizations on Tableau Public are located below:
-https://public.tableau.com/views/3_10RockbusterPresentation_17134027032480/Story-noheading?:language=en-US&publish=yes&:sid=&:display_count=n&:origin=viz_share_link![image](https://github.com/Nancy-Kolaski/SQL-RockbusterVideoRental/assets/172224909/477c8a84-1695-4027-bcde-4bdc4abcad41 
-
-([Tableau link for Rockbuster Presentation]([url](https://public.tableau.com/views/3_10RockbusterPresentation_17134027032480/Story-noheading?:language=en-US&publish=yes&:sid=&:display_count=n&:origin=viz_share_link![image](https://github.com/Nancy-Kolaski/SQL-RockbusterVideoRental/assets/172224909/477c8a84-1695-4027-bcde-4bdc4abcad41 ))
+[Rockbuster Tableau Presentation Link](https://public.tableau.com/views/3_10RockbusterPresentation_17134027032480/Story-noheading?:language=en-US&publish=yes&:sid=&:display_count=n&:origin=viz_share_link![image](https://github.com/Nancy-Kolaski/SQL-RockbusterVideoRental/assets/172224909/477c8a84-1695-4027-bcde-4bdc4abcad41))
