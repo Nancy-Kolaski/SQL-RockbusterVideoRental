@@ -1,0 +1,17 @@
+-- This query shows an example of ETL (Extract, Transform, and Load) that is needed for data migration.  
+--This finds the minimum and the maximum replacement costs for each rating category ordered by ratings as follows: G, PG, PG-13, R, NC-17?
+--Bonus Question 3.4
+
+select rating,
+min(replacement_cost) AS min_replacement_cost,
+max(replacement_cost) AS max_replacement_cost
+	from film
+	group by rating
+	order by case
+	when rating = 'G' then '1'
+	when rating = 'PG' then '2'
+
+	when rating = 'PG-13' then '3'
+	when rating = 'R' then '4'
+	else '5'
+	end
