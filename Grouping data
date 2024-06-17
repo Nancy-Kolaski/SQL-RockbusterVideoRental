@@ -1,0 +1,9 @@
+--This example shows how to find average, minimum, and maximum rental rate for each rating category
+--(Exercise 3.4)
+
+select rating,
+avg (rental_rate) as avg_rental_rate,
+min (rental_duration) as min_rental_duration,
+max (rental_duration) as max_rental_duration
+from film
+group  by rating
