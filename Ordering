@@ -1,0 +1,12 @@
+--This query selects every film from the “film” table, with the movies sorted by title from A to Z, 
+--then by most recent release year, 
+--and then by highest to lowest rental rate.
+
+
+select *
+from film
+order by title asc, 
+		 release_year desc, 
+		 rental_rate desc
+
+
