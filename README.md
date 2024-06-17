@@ -21,6 +21,12 @@ The Rockbuster Stealth Management Board has asked a series of business questions
 ## Data & Tools 
 The dataset includes information on Rockbuster’s data looaded into a PostgreSQL database including: film inventory, customers, payments, stores, staff, films, actors, rental history, addresses, and transactions. It is structured to reflect real-world business scenarios and relationships between different data tables.
 
+-data set: [3.4 data.xlsx](https://github.com/user-attachments/files/15874692/3.4.data.xlsx)
+
  
 ## Visualizations on Tableau Public
+https://public.tableau.com/views/3_10RockbusterPresentation_17134027032480/Story-noheading?:language=en-US&publish=yes&:sid=&:display_count=n&:origin=viz_share_link![image](https://github.com/Nancy-Kolaski/SQL-RockbusterVideoRental/assets/172224909/477c8a84-1695-4027-bcde-4bdc4abcad41
+
+
+
 
