@@ -1,0 +1,65 @@
+--SUBQUERIES
+
+--This subquery will find the AVERAGE AMOUNT PAID BY THE TOP 5 CUSTOMERS
+
+select AVG(total_amount_paid)
+	from
+	(select A.customer_id, A.First_name, A.last_name, C.city, D.country,
+	SUM (E.amount) AS total_amount_paid
+	From customer A
+	INNER JOIN address B on A.address_id = B.address_id
+	INNER JOIN city C on B.city_id = B.city_id
+	INNER JOIN country D on C.country_id = D.country_id
+	INNER JOIN payment E on A.customer_id = E.customer_id
+
+	where C.city IN
+		(select city
+		from customer A
+		INNER JOIN address B on A.address_id = B.address_id
+		INNER JOIN city C on B.city_id = C.city_id
+		INNER JOIN country D on C.country_id = D.country_id
+		group by C.city
+	order by COUNT (A.customer_id) desc
+		Limit 10)
+
+Group by A.customer_id, A.first_name, A.last_name, C.city, D.country
+order by total_amount_paid desc
+Limit 5) as average
+
+
+
+--TO FIND TOP 5 CUSTOMERS IDENTIFIED IN ABOVE SUBQUERY THAT ARE BASED WITHIN EACH COUNTRY, USE THE FOLLOWING SUBQUERY
+
+select D.country,
+COUNT (distinct A.customer_id) AS all_customer_count,
+COUNT (distinct top_5_customers) AS top_customer_count
+from customer A
+JOIN address B on A.address_id = B.address_id
+JOIN city C on B.city_id = C.city_id
+JOIN country D on C.country_id = D.country_id
+LEFT JOIN
+(select A.customer_id, A.first_name, A.last_name, C.city, D.country,
+SUM (E.amount) AS total_amount_paid
+From customer A
+	JOIN address B on A.address_id = B.address_id
+	JOIN city C on B.city_id = C.city_id
+	JOIN country D on C.country_id = D.country_id
+	JOIN payment E on A.customer_id = E.customer_id
+where C.city IN 
+	(select city
+	from customer A
+	JOIN address B on A.address_id = B.address_id
+	JOIN city C on B.city_id = C.city_id
+	JOIN country D on C.country_id = D.country_id
+where D.country IN (select D.country
+					from customer A
+					JOIN address B on A.address_id = B.address_id
+					JOIN city C  on B.city_id= C.city_id
+					JOIN country D on C.country_id = D.country_id)
+	Group by D.country, C.city
+	order by COUNT (A.customer_id) desc limit 10)
+	Group by A.customer_id, A.first_name, A.last_name, C.city, D.country
+	order by SUM (E.amount) desc limit 5) AS top_5_customers
+	on A.customer_id = top_5_customers.customer_id
+	Group by D.country
+	order by all_customer_count desc limit 10;
