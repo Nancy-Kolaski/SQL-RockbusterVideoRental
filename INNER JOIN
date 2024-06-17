@@ -1,0 +1,64 @@
+# INNER JOIN
+
+--TOP 10 COUNTRIES
+--This query finds the top 10 countries for Rockbuster in terms of customer numbers (using GROUP BY and ORDER BY, following JOIN). For this, we would have to use the country table and customer table, however there were no direct links. Using my Lucid chart ERD, I could see the links as follows: (A)customer table ->(B)address table->(C)city table-> (D)country table
+--customer_id given alias 'number_of_customers' from customer table. Then, I used INNER JOIN to join all of the tables together following the syntax for A through D (to link all 4 tables),since we only need a limited amount of info from this query.  I grouped by country and ordered by desc in order to see the highest ranks for the top 10, and used limit 10 because we only need top 10.  The following 2 queries build from this first INNER JOIN
+
+select D.country,
+COUNT (A.Customer_id) AS number_of_customers
+from customer A
+INNER JOIN address B on A.address_id = b.address_id
+INNER JOIN city C on B.city_id =C.city_id
+INNER JOIN country D on C.country_id = D.country_id
+Group by D.country
+order by number_of_customers desc
+limit 10
+
+
+
+--TOP 10 CITIES WITHIN TOP 10 COUNTRIES
+
+select C.city, D.country,
+COUNT(A.customer_id) AS number_of_customers
+from customer A
+INNER JOIN address B on A.address_id = B.address_id
+INNER JOIN city C on B.city_id = C.city_id
+INNER JOIN country D on C.country_id = D.country_id
+where D.country IN
+	(select country
+	From customer A
+	INNER JOIN address B on A.address_id = B.address_id
+	INNER JOIN city C on B.city_id = C.city_id
+	INNER JOIN country D on C.country_id = D.country_id
+	Group by D.country
+	order by COUNT (a.customer_id) desc
+	limit 10)
+group by C.city, D.country
+order by number_of_customers desc
+Limit 10;
+
+
+
+
+--TOP 5 CUSTOMERS FROM THE TOP 10 CITIES WHO'VE PAID THE HIGHEST TOTAL AMOUNTS TO ROCKBUSTER
+
+select A.customer_id, A.first_name, A.last_name, C.city, D.country,
+	SUM (E.amount) AS total_amount_paid
+	From customer A
+INNER JOIN address B on A.address_id = B.address_id
+INNER JOIN city C on B.city_id = C.city_id
+INNER JOIN country D on C.country_id = D.country_id
+INNER JOIN payment E ON A.customer_id = E.customer_id
+	
+where C.city IN
+	(select city
+	From customer A
+	INNER JOIN address B on A.address_id = B.address_id
+	INNER JOIN city C on B.city_id = C.city_id
+	INNER JOIN country D on C.country_id = D.country_id
+	Group by C.city
+	order by COUNT (A.customer_id) desc
+	limit 10)
+group by A.customer_id, A.first_name, A.last_name, C.city, D.country
+order by total_amount_paid desc
+Limit 5;
